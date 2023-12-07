@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {Link, Tabs} from 'expo-router';
 import {Pressable, useColorScheme} from 'react-native';
 
-import Colors from '../../constants/Colors';
+import Colors from '../../../constants/Colors';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -34,6 +34,13 @@ export default function TabLayout() {
         name='two'
         options={{
           title: 'Log Part',
+          tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name='sign-out'
+        options={{
+          title: 'Sign Out',
           tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
         }}
       />
