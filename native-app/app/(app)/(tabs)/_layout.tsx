@@ -40,7 +40,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name='sign-out'
         options={{
-          title: 'Sign Out',
+          title: 'Account',
           tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
         }}
       />

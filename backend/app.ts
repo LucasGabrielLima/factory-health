@@ -1,7 +1,8 @@
 import dotenv from 'dotenv'
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import * as mongoose from 'mongoose';
-import {getMachineHealth} from './machineHealth';
+import cors from 'cors'
+import { getMachineHealth } from './machineHealth';
 import User from './models/userModel'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
@@ -14,6 +15,11 @@ mongoose.connect("mongodb://localhost:27017/factory-health")
 const app = express();
 const port = process.env.APPLICATION_PORT;
 
+app.use(cors({
+  origin: "*",
+  methods: ['GET', 'POST']
+}))
+
 // Middleware to parse JSON request bodies
 app.use(express.json());
 
@@ -21,21 +27,21 @@ app.use(express.json());
 app.post('/machine-health', validateToken, (req: Request, res: Response) => {
   const result = getMachineHealth(req);
   if (result.error) {
-    res.status(400).json(result);
+    return res.status(400).json(result);
   } else {
-    res.json(result);
+    return res.json(result);
   }
 });
 
 app.post('/user/register', async (req, res) => {
-  const {username, password} = req.body
+  const { username, password } = req.body
   if (!username || !password) {
-    res.status(400).json({message: 'Username and password are required'})
+    return res.status(400).json({ message: 'Username and password are required' })
   }
 
   const usernameExists = await User.findOne({ username })
-  if (usernameExists){
-    res.status(400).json({message: 'Username already registered'})
+  if (usernameExists) {
+    return res.status(400).json({ message: 'Username already registered' })
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -45,19 +51,27 @@ app.post('/user/register', async (req, res) => {
   })
 
   if (user) {
-    res.status(201).json({_id: user.id, username: user.username})
+    const accessToken = jwt.sign({
+      user: {
+        username: user.username,
+        id: user.id
+      }
+    },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      { expiresIn: '1m' });
+    return res.status(201).json({ _id: user.id, username: user.username, accessToken })
   }
   else {
-    res.status(400).json({message: 'User data is not valid'})
+    return res.status(400).json({ message: 'User data is not valid' })
 
   }
 });
 
 app.post('/user/login', async (req, res) => {
-  const {username, password} = req.body;
+  const { username, password } = req.body;
 
   if (!username || !password) {
-    res.status(400).json({message: 'Username and password are required'})
+    return res.status(400).json({ message: 'Username and password are required' })
   }
 
   const user = await User.findOne({ username });
@@ -68,15 +82,15 @@ app.post('/user/login', async (req, res) => {
         username: user.username,
         id: user.id
       }
-    }, 
-    process.env.ACCESS_TOKEN_SECRET as string,
-    {expiresIn: '1m'});
+    },
+      process.env.ACCESS_TOKEN_SECRET as string,
+      { expiresIn: '1m' });
 
 
-    res.status(200).json({accessToken});
+    return res.status(200).json({ accessToken });
   }
   else {
-    res.status(401).json({message: 'Username or password are invalid'})
+    return res.status(401).json({ message: 'Username or password are invalid' })
   }
 });
 

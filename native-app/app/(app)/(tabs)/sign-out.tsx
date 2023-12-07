@@ -1,17 +1,15 @@
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
 import { useSession } from '../../../contexts/authContext';
 
-export default function Index() {
+export default function Account() {
   const { signOut } = useSession();
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text
-        onPress={() => {
-          signOut();
-        }}>
-        Sign Out
-      </Text>
+      <Button
+        title='Sign Out'
+        onPress={signOut}>
+      </Button>
     </View>
   );
 }
