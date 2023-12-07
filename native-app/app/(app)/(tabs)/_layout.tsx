@@ -44,6 +44,13 @@ export default function TabLayout() {
           tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
         }}
       />
+      <Tabs.Screen
+        name='scores'
+        options={{
+          title: 'Scores',
+          tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
+        }}
+      />
     </Tabs>
   );
 }

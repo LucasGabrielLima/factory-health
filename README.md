@@ -131,5 +131,6 @@ This project is designed to take approximately 3 hours, but there is no strict t
 
 ## Issues
 Ran into this issue: https://github.com/lawnstarter/react-native-picker-select/issues/486
-
 solved by installing "@react-native-picker/picker": "^1.16.0" instead of "@react-native-community/picker"
+
+Had problems creating a Line chart with historic data: https://github.com/software-mansion/react-native-svg/issues/834

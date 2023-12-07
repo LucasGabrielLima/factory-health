@@ -25,7 +25,6 @@ export default function RootLayoutNav() {
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-  console.log('session', session)
 
   if (!session) {
     return <Redirect href="/sign-in" />;
