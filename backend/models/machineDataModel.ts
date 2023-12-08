@@ -13,6 +13,14 @@ const machineDataSchema = new Schema({
         type: Number,
         required: [true, "score is required"]
     },
+    username: {
+        type: String,
+        required: [true, "username is required"],
+    },
+    userId: {
+        type: String,
+        required: [true, "userId is required"],
+    },
     date: {
         type: Date,
         required: [true, "date is required"]

@@ -5,7 +5,7 @@ import MachineData from '../models/machineDataModel'
 
 const machineHealthRouter = Router();
 
-machineHealthRouter.post('/', validateToken, async (req, res) => {
+machineHealthRouter.post('/', validateToken, async (req: any, res) => {
     const result = getMachineHealth(req);
 
     for (const machine in result.machineScores) {
@@ -13,6 +13,8 @@ machineHealthRouter.post('/', validateToken, async (req, res) => {
             machine,
             score: result.machineScores[machine as keyof typeof result.machineScores],
             datapoints: req.body.machines[machine as keyof typeof result.machineScores],
+            username: req.user.user.username,
+            userId: req.user.user.id,
             date: Date.now()
           })
     }
