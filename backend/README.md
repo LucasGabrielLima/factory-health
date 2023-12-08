@@ -8,6 +8,18 @@ Before you get started, make sure you have the following prerequisites installed
 
 - Node.js: [Download Node.js](https://nodejs.org/)
 - Yarn (optional but recommended, can use NPM instead): [Install Yarn](https://classic.yarnpkg.com/en/docs/install/)
+- MongoDB (Instructions below): [Install MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/)
+
+## MongoDB
+MongoDB was added to the project, to install, follow instructions at: https://www.mongodb.com/docs/manual/administration/install-community/
+My system is a Linux Ubuntu
+
+After installing, run:
+`sudo systemctl start mongod.service` - To start MongoDB service
+`mongosh` - To enter MongoDB shell
+`use factory-health` - Inside MongoDB shell, to create the project's DB
+`exit` - To exit MongoDB shell
+
 
 ## Installation
 
@@ -56,7 +68,10 @@ The response will include the machine name and its health score.
 
 ### API Endpoints
 
-- `POST /machine-health`: Calculate the health of a machine based on provided data.
+- `POST /machine-health`: Calculate the health of a machine based on provided data. Store data along with calculated score and requesting user. Protected endpoint.
+- `GET /machine-health/scores/:machine`: Fetch historical stored data for a machine. Protected endpoint.
+- `POST /user/register`: Register a new user.
+- `POST /user/login`: Login as an existing user.
 
 ## Testing
 

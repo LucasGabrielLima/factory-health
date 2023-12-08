@@ -129,8 +129,47 @@ For specific details on running the API and React Native app, refer to their res
 This project is designed to take approximately 3 hours, but there is no strict time limit. We are interested in seeing how far you can get and the quality of your final deliverable. Focus on completing the core requirements before attempting the stretch goals. Feel free to make reasonable assumptions if certain details are not explicitly provided. If you encounter challenges, document them and describe how you would address them with more time.
 
 
+## MongoDB
+MongoDB was added to the project, to install, follow instructions at: https://www.mongodb.com/docs/manual/administration/install-community/
+My system is a Linux Ubuntu
+
+After installing, run:
+`sudo systemctl start mongod.service` - To start MongoDB service
+`mongosh` - To enter MongoDB shell
+`use factory-health` - Inside MongoDB shell, to create the project's DB
+`exit` - To exit MongoDB shell
+
+
+## New API Endpoints
+
+- `POST /machine-health`: Calculate the health of a machine based on provided data. Store data along with calculated score and requesting user. Protected endpoint.
+- `GET /machine-health/scores/:machine`: Fetch historical stored data for a machine. Protected endpoint.
+- `POST /user/register`: Register a new user.
+- `POST /user/login`: Login as an existing user.
+
+## Decisions: 
+- Used MongoDB as the persistence layer, due to ease of configuration and scalability.
+- JWT for authentication
+- Used React Context API to manage machine data and session states.
+
+
+## Notes
+I had limited experience with React and never used react-native and expo, so I had to invest a good amount of time in researching to implement the session management and to try and improve data state management.
+Because of this I'm not 100% confident my solutions are optimal, and I would certainly improve on them with more time to learn.
+With that said I found react-native to be extremely interesting and will continue to study it.
+
+Things to improve with more time:
+- Typescript typing
+- Better error handling
+- Create and use indexes to improve mongodb query performance
+- Create options to filter stored machine health scores by user and date
+- Create an option to fetch historic data of an specific machine part
+- General improvements on native app pages style
+- Native app tests
+
 ## Issues
 Ran into this issue: https://github.com/lawnstarter/react-native-picker-select/issues/486
 solved by installing "@react-native-picker/picker": "^1.16.0" instead of "@react-native-community/picker"
 
-Had problems creating a Line chart with historic data: https://github.com/software-mansion/react-native-svg/issues/834
+Had problems creating a line chart with historic data, as all line chart libs I tested ran into this issue: https://github.com/software-mansion/react-native-svg/issues/834
+Didn't find a reasonable solution quickly, so I opted for a more simple screen with only a table, which would be easy to convert to a line chart with more time, since I'm already fetching the data in a format close to what would be used by a line chart lib.
