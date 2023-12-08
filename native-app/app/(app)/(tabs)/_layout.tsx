@@ -38,17 +38,17 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='sign-out'
-        options={{
-          title: 'Account',
-          tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name='scores'
         options={{
           title: 'Scores',
-          tabBarIcon: ({color}) => <TabBarIcon name='edit' color={color} />,
+          tabBarIcon: ({color}) => <TabBarIcon name='table' color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name='sign-out'
+        options={{
+          title: 'Account',
+          tabBarIcon: ({color}) => <TabBarIcon name='home' color={color} />,
         }}
       />
     </Tabs>

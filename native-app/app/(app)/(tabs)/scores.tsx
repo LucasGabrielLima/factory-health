@@ -8,8 +8,8 @@ import { useSession } from '../../../contexts/authContext';
 
 const TablePage = () => {
   const { session } = useSession();
-  const [machineName, setMachineName] = useState('');
   const [machineData, setMachineData] = useState('');
+  let machineName: string;
   const machineNames = [
     { label: 'Welding Robot', value: MachineType.WeldingRobot },
     { label: 'PaintingStation', value: MachineType.PaintingStation },
@@ -18,9 +18,6 @@ const TablePage = () => {
   ];
 
   const getScores = async (machineName) => {
-    console.log('get', `${BASE_URL}/scores/${machineName}`);
-    console.log('machine', machineName);
-    
     try {
       const response = await axios.get(`${BASE_URL}/machine-health/scores/${machineName}`,
         {
@@ -28,9 +25,6 @@ const TablePage = () => {
             Authorization: 'Bearer ' + session
           }
         });
-
-      console.log(response);
-      
 
       if (response.data) {
         setMachineData(response.data);
@@ -54,7 +48,7 @@ const TablePage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.container}>
+      <View>
         <Text>Machine Name</Text>
         <Picker
           value={machineName}

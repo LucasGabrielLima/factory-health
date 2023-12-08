@@ -5,7 +5,6 @@ import * as jwt from 'jsonwebtoken'
 
 const userRouter = Router();
 
-
 userRouter.post('/register', async (req, res) => {
     const { username, password } = req.body
     if (!username || !password) {
@@ -31,7 +30,7 @@ userRouter.post('/register', async (req, res) => {
         }
       },
         process.env.ACCESS_TOKEN_SECRET as string,
-        { expiresIn: '1m' });
+        { expiresIn: process.env.TOKEN_EXPIRE_TIME });
       return res.status(201).json({ _id: user.id, username: user.username, accessToken })
     }
     else {
@@ -57,7 +56,7 @@ userRouter.post('/register', async (req, res) => {
         }
       },
         process.env.ACCESS_TOKEN_SECRET as string,
-        { expiresIn: '1m' });
+        { expiresIn: process.env.TOKEN_EXPIRE_TIME });
   
   
       return res.status(200).json({ accessToken });
