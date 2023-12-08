@@ -34,7 +34,7 @@ This will launch the Expo development server, and you can access the app on your
 
 The project structure is organized as follows:
 
-- `App.tsx`: The entry point of the Expo app, where the navigation is configured.
+- `app/_layout.tsx`: The entry point of the Expo app, where the navigation is configured.
 - `components/`: Contains reusable components used throughout the app.
 - `app/`: Contains individual screens or pages/tabs of the app.
 - `data/`: Stores JSON files with machine and part data for evaluation.

@@ -31,11 +31,8 @@ machineHealthRouter.get('/scores/:machine', validateToken, async (req, res) => {
   const machineData = await MachineData.find({ machine }).sort({ date: 'desc' });
 
   if (machineData) {
-    console.log('bbb')
-
     return res.json(machineData);
   } else {
-    console.log('aaa')
     return res.status(404);
   }
 });

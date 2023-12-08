@@ -23,7 +23,6 @@ export function SessionProvider(props: React.PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: async (username, password) => {
-          console.log(`${BASE_URL}/user/login`)
           try {
             const res = await axios.post(`${BASE_URL}/user/login`, {
               username,
@@ -32,7 +31,6 @@ export function SessionProvider(props: React.PropsWithChildren) {
 
             const updateSession = async () => {
               setSession(res.data.accessToken);
-              console.log('foi', res.data.accessToken);
             };
 
             await updateSession()
@@ -54,7 +52,6 @@ export function SessionProvider(props: React.PropsWithChildren) {
         },
 
         signUp: async (username, password) => {
-          console.log(`${BASE_URL}/user/login`)
           try {
             const res = await axios.post(`${BASE_URL}/user/register`, {
               username,
@@ -63,7 +60,6 @@ export function SessionProvider(props: React.PropsWithChildren) {
 
             const updateSession = async () => {
               setSession(res.data.accessToken);
-              console.log('foi', res.data.accessToken);
             };
 
             await updateSession()
