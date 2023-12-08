@@ -1,7 +1,9 @@
-import {useState, useEffect, useMemo, useCallback} from 'react';
+import {useState, useEffect, createContext, useCallback, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const useMachineData = () => {
+const MachineDataContext = createContext(null);
+
+export const MachineDataProvider = ({ children }) => {
   const [machineData, setMachineData] = useState(undefined);
 
   useEffect(() => {
@@ -78,11 +80,20 @@ export const useMachineData = () => {
     [machineData],
   );
 
-  return {
-    machineData,
-    updateMachineData,
-    resetMachineData,
-    loadMachineData,
-    setScores,
-  };
+  return (
+    <MachineDataContext.Provider value={{ machineData, updateMachineData, loadMachineData, resetMachineData, setScores }}>
+      {children}
+    </MachineDataContext.Provider>
+  );
+};
+
+export const useMachineDataContext = () => {
+  const value = useContext(MachineDataContext);
+  if (process.env.NODE_ENV !== 'production') {
+    if (!value) {
+      throw new Error('useSession must be wrapped in a <MachineDataProvider />');
+    }
+  }
+
+  return value;
 };

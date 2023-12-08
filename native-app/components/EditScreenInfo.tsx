@@ -1,10 +1,9 @@
-import React, {useCallback, useState} from 'react';
-import {Button, Platform, StyleSheet, TextInput} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, StyleSheet, TextInput} from 'react-native';
 
 import {Text, View} from './Themed';
 import {MachineType} from '../data/types';
-import {useMachineData} from '../app/useMachineData';
-import {useFocusEffect} from 'expo-router';
+import {useMachineDataContext} from '../contexts/machineDataContext';
 import Picker from './Picker';
 
 export default function EditScreenInfo({path}: {path: string}) {
@@ -12,7 +11,7 @@ export default function EditScreenInfo({path}: {path: string}) {
   const [partName, setPartName] = useState('');
   const [partValue, setPartValue] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const {machineData, updateMachineData, loadMachineData} = useMachineData();
+  const {machineData, updateMachineData, loadMachineData} = useMachineDataContext();
 
   const machineNames = [
     {label: 'Welding Robot', value: MachineType.WeldingRobot},
@@ -76,9 +75,9 @@ export default function EditScreenInfo({path}: {path: string}) {
     },
   ];
 
-  const apiUrl: string = `http://${
-    Platform?.OS === 'android' ? '10.0.2.2' : 'localhost'
-  }:3001/machine-health`;
+  useEffect(() => {
+    loadMachineData();
+  }, [loadMachineData]);
 
   const savePart = useCallback(async () => {
     try {
@@ -99,16 +98,9 @@ export default function EditScreenInfo({path}: {path: string}) {
       }, 2000);
     } catch (error) {
       console.error(error);
-      throw error; // Handle API errors appropriately
+      throw error;
     }
   }, [machineData, updateMachineData, machineName, partName, partValue]);
-
-  //Doing this because we're not using central state like redux
-  useFocusEffect(
-    useCallback(() => {
-      loadMachineData();
-    }, []),
-  );
 
   return (
     <View>

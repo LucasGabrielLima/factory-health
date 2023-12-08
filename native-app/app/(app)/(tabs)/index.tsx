@@ -1,36 +1,25 @@
-import { Button, Platform, StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '../../../components/Themed';
-import { Link, useFocusEffect } from 'expo-router';
+import { Link } from 'expo-router';
 import axios from 'axios';
-import { useMachineData } from '../../useMachineData';
-import { useCallback, useState } from 'react';
+import { useMachineDataContext } from '../../../contexts/machineDataContext';
+import { useCallback, useEffect } from 'react';
 import { PartsOfMachine } from '../../../components/PartsOfMachine';
 import { MachineScore } from '../../../components/MachineScore';
 import { useSession } from '../../../contexts/authContext';
-
-let apiUrl: string =
-  'https://fancy-dolphin-65b07b.netlify.app/api/machine-health';
-
-if (__DEV__) {
-  apiUrl = `http://${Platform?.OS === 'android' ? '10.0.2.2' : 'localhost'
-    }:3001/machine-health`;
-}
+import { BASE_URL } from '../../../config';
 
 export default function StateScreen() {
   const { session } = useSession();
-  const { machineData, resetMachineData, loadMachineData, setScores } =
-    useMachineData();
+  const { machineData, resetMachineData, loadMachineData, setScores } = useMachineDataContext();
 
-  //Doing this because we're not using central state like redux
-  useFocusEffect(
-    useCallback(() => {
-      loadMachineData();
-    }, []),
-  );
+  useEffect(() => {
+    loadMachineData();
+  }, [loadMachineData]);
 
   const calculateHealth = useCallback(async () => {
     try {
-      const response = await axios.post(apiUrl, {
+      const response = await axios.post(`${BASE_URL}/machine-health`, {
         machines: machineData?.machines,
       },
         {

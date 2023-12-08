@@ -8,7 +8,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import machineData from '../data/machineData.json';
 import {MachineType} from '../data/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useMachineData} from '../app/useMachineData';
+import {useMachineData} from '../contexts/machineDataContext';
 import {useFocusEffect} from 'expo-router';
 
 export const PartsOfMachine = ({

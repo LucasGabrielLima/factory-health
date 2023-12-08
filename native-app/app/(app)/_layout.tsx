@@ -5,6 +5,7 @@ import { useSession } from '../../contexts/authContext';
 import { Text } from '../../components/Themed';
 import { Logs } from 'expo'
 import { useEffect } from 'react';
+import { MachineDataProvider } from '../../contexts/machineDataContext';
 
 
 
@@ -32,9 +33,11 @@ export default function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      <MachineDataProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </MachineDataProvider>
     </ThemeProvider>
   );
 }
